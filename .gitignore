@@ -1,0 +1,45 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+.nuget/
+packages/
+
+# Publish output
+publish/
+
+# Entity Framework migrations snapshots
+*Migrations/*.Designer.cs
+*Migrations/*Snapshot.cs
+
+# Test results
+TestResults/
+
+# Azure
+local.settings.json
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
