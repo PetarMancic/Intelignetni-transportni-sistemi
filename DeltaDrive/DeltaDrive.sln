@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaDrive", "DeltaDrive\DeltaDrive.csproj", "{CFCA504B-4488-4B61-A6C3-D53638A3594D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFCA504B-4488-4B61-A6C3-D53638A3594D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFCA504B-4488-4B61-A6C3-D53638A3594D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFCA504B-4488-4B61-A6C3-D53638A3594D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFCA504B-4488-4B61-A6C3-D53638A3594D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {08E24A86-7D32-47FC-B2B3-C757A625295A}
+	EndGlobalSection
+EndGlobal
