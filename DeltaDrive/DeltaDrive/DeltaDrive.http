@@ -1,4 +1,4 @@
-@DeltaDrive_HostAddress = http://localhost:5070
+@DeltaDrive_HostAddress = http://localhost:5214
 
 GET {{DeltaDrive_HostAddress}}/weatherforecast/
 Accept: application/json

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaDrive", "DeltaDrive\DeltaDrive.csproj", "{CFCA504B-4488-4B61-A6C3-D53638A3594D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaDrive", "DeltaDrive\DeltaDrive.csproj", "{F3478B91-DDB2-4EB3-90C5-B56B681D2E7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CFCA504B-4488-4B61-A6C3-D53638A3594D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFCA504B-4488-4B61-A6C3-D53638A3594D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFCA504B-4488-4B61-A6C3-D53638A3594D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFCA504B-4488-4B61-A6C3-D53638A3594D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3478B91-DDB2-4EB3-90C5-B56B681D2E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3478B91-DDB2-4EB3-90C5-B56B681D2E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3478B91-DDB2-4EB3-90C5-B56B681D2E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3478B91-DDB2-4EB3-90C5-B56B681D2E7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {08E24A86-7D32-47FC-B2B3-C757A625295A}
+		SolutionGuid = {AE1E2370-4455-4BD9-98B3-E0804EF29953}
 	EndGlobalSection
 EndGlobal
