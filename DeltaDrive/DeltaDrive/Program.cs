@@ -1,3 +1,7 @@
+using DeltaDrive.Repository;
+using DeltaDrive.Repository.Interfaces;
+using DeltaDrive.Services;
+using DeltaDrive.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +24,8 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 builder.Services.AddScoped<IPasswordHasher<Passenger>, PasswordHasher<Passenger>>();
-
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IVehicleService, VehicleService>();
 
 
 var app = builder.Build();
