@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using DeltaDrive.Features.Passengers.Queries;
 using DeltaDrive.Dto;
+using System.Diagnostics;
 
 namespace DeltaDrive.Controllers
 {
@@ -35,10 +36,15 @@ namespace DeltaDrive.Controllers
             return Ok(passenger);
         }
 
-        [HttpGet("GetClosestVehicles")]
-        public async Task<FindTenNearestVehicles> GetClosestVehicles(double latitude, double longitude)
+        [HttpGet("GetTenNearestVehicles")]
+        public async Task<TenNearestVehicles> GetTenNearestVehicles(double latitude, double longitude)
         {
-            var closestVehicles = await _mediator.Send(new GetClosestVehiclesQuery(latitude, longitude));
+            var stopwatch = Stopwatch.StartNew();  
+            var closestVehicles = await _mediator.Send(new GetTenNearestVehiclesQuery(latitude, longitude));
+
+            stopwatch.Stop(); 
+            var elapsedMs = stopwatch.ElapsedMilliseconds;
+           
             return closestVehicles;
         }
     }

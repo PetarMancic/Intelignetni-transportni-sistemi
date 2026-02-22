@@ -27,7 +27,7 @@ namespace DeltaDrive.Controllers
         [HttpPost("import")]
         public async Task<IActionResult> ImportFromCsv(ImportVehiclesFromCsvCommand command)
         {
-            var command1= new ImportVehiclesFromCsvCommand("C:\\FAX\\MASTER\\Intelignetni-transportni-sistemi\\deltaTest.csv");
+            var command1= new ImportVehiclesFromCsvCommand("C:\\FAX\\MASTER\\Intelignetni-transportni-sistemi\\delta.csv");
             await _mediator.Send(command1);
             return Ok();
         }
