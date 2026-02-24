@@ -1,3 +1,4 @@
+using DeltaDrive.Helpers;
 using DeltaDrive.Repository;
 using DeltaDrive.Repository.Interfaces;
 using DeltaDrive.Services;
@@ -26,6 +27,9 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddScoped<IPasswordHasher<Passenger>, PasswordHasher<Passenger>>();
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IVehicleService, VehicleService>();
+builder.Services.AddScoped<IHelperMethods, HelperMethods>();
+builder.Services.AddScoped<IRideRepository, RideRepository>();
+builder.Services.AddScoped<IRideService, RideService>();
 
 
 var app = builder.Build();

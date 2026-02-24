@@ -1,10 +1,11 @@
 ﻿using DeltaDrive.Domain;
+using DeltaDrive.Dto;
 
 namespace DeltaDrive.Services.Interfaces
 {
     public interface IVehicleService
     {
-        Task<List<Vehicle>> GetTenNearestVehicles(double latitude, double longitude);
+        Task<TenNearestVehiclesResponseDto> GetTenNearestVehicles(TenNearestVehiclesRequestDto request, CancellationToken cancellationToken);
 
     }
 }

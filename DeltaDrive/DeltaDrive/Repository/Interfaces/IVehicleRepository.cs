@@ -1,9 +1,11 @@
 ﻿using DeltaDrive.Domain;
+using DeltaDrive.Dto;
+using MediatR;
 
 namespace DeltaDrive.Repository.Interfaces
 {
-    public interface IVehicleRepository
+    public interface IVehicleRepository : IBaseRepository<Vehicle>
     {
-        Task<List<Vehicle>> GetAvailableVehicles(double lat, double lon);
+        Task<TenNearestVehiclesResponseDto> GetAvailableVehicles(TenNearestVehiclesRequestDto request);
     }
 }

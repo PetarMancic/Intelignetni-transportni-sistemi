@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  db:
+    image: kartoza/postgis # običan PostgreSQL, bez PostGIS
+    container_name: deltadrive-postgis
+    restart: always
+    environment:
+      POSTGRES_DB: deltadrive-postgis
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres # OBAVEZNO
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

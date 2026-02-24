@@ -37,10 +37,9 @@ namespace DeltaDrive.Features.Vehicle.Commands
                 var pricePerKMText = columns[6].Replace("EUR", "").Trim();
 
                 Location location = new Location
-                {
-                    Latitude = double.Parse(columns[3], CultureInfo.InvariantCulture),
-                    Longitude = double.Parse(columns[4], CultureInfo.InvariantCulture)
-                };
+                    (double.Parse(columns[3], CultureInfo.InvariantCulture),
+                    double.Parse(columns[4], CultureInfo.InvariantCulture)
+                    );
                 var vehicle = new DeltaDrive.Domain.Vehicle
                 {
                     Brand = columns[0],

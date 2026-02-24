@@ -37,15 +37,24 @@ namespace DeltaDrive.Controllers
         }
 
         [HttpGet("GetTenNearestVehicles")]
-        public async Task<TenNearestVehicles> GetTenNearestVehicles(double latitude, double longitude)
-        {
-            var stopwatch = Stopwatch.StartNew();  
-            var closestVehicles = await _mediator.Send(new GetTenNearestVehiclesQuery(latitude, longitude));
+        public async Task<TenNearestVehiclesResponseDto> GetTenNearestVehicles([FromQuery] TenNearestVehiclesRequestDto request)
+        {          
+            var stopwatch = Stopwatch.StartNew();
+            var result = await _mediator.Send(
+                    new GetTenNearestVehiclesQuery(request)); //ovde treba request 
 
             stopwatch.Stop(); 
             var elapsedMs = stopwatch.ElapsedMilliseconds;
            
-            return closestVehicles;
+            return result;
+        }
+
+        [HttpPost("BookVehicle")]
+        public async Task<bool> BookVehicle(BookVehicleRequestDto vehicleDto)
+        {
+
+            var command = new BookVehicleCommand(vehicleDto.VehicleId,vehicleDto.PassengerId, vehicleDto.StartLat, vehicleDto.StartLon, vehicleDto.DestLat, vehicleDto.DestLon);
+            return await _mediator.Send(command);
         }
     }
 }

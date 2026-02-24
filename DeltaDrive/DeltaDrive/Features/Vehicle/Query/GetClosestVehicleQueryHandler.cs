@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeltaDrive.Features.Vehicle.Query
 {
-    public class GetClosestVehiclesQueryHandler : IRequestHandler<GetTenNearestVehiclesQuery, TenNearestVehicles>
+    public class GetClosestVehiclesQueryHandler : IRequestHandler<GetTenNearestVehiclesQuery, TenNearestVehiclesResponseDto>
     {
         private readonly IVehicleService _vehicleService;
 
@@ -14,11 +14,14 @@ namespace DeltaDrive.Features.Vehicle.Query
             _vehicleService = vehicleService;
         }
 
-        public async Task<TenNearestVehicles> Handle(GetTenNearestVehiclesQuery request, CancellationToken cancellationToken)
+        public async Task<TenNearestVehiclesResponseDto> Handle(GetTenNearestVehiclesQuery request, CancellationToken cancellationToken)
         {
-            var vehicles = await _vehicleService.GetTenNearestVehicles(request.latitude, request.longitude);
-
-            return new TenNearestVehicles(vehicles);
+            return await _vehicleService.GetTenNearestVehicles(request.Request, cancellationToken);
         }
+
+        //public async Task<TenNearestVehiclesResponseDto> Handle(GetTenNearestVehiclesQuery request, CancellationToken cancellationToken)
+        //{
+        //    return await _vehicleService.GetTenNearestVehicles(request.Request, cancellationToken);
+        //}
     }
 }

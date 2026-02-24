@@ -1,9 +1,10 @@
 ﻿namespace DeltaDrive.Repository
 {
+    using DeltaDrive.Repository.Interfaces;
     using Microsoft.EntityFrameworkCore;
     using System.Linq.Expressions;
 
-    public class BaseRepository<TEntity> where TEntity : class
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity>  where TEntity : class
     {
         protected readonly DbContext _context;
         protected readonly DbSet<TEntity> _dbSet;
