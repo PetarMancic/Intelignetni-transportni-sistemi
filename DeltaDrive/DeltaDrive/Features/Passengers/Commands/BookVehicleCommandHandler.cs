@@ -17,6 +17,7 @@ namespace DeltaDrive.Features.Passengers.Commands
         {
             Location startLocation = new Location (request.StartLat, request.StartLon);
             Location destinationLocation = new Location(request.DestLat, request.DestLon);
+
             var ride= await _rideService.BookRide(request.VehicleId, request.PassengerId, startLocation, destinationLocation);
             if (ride != null)
                 return true;

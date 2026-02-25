@@ -1,4 +1,5 @@
 using DeltaDrive.Helpers;
+using DeltaDrive.HubSimulation;
 using DeltaDrive.Repository;
 using DeltaDrive.Repository.Interfaces;
 using DeltaDrive.Services;
@@ -30,9 +31,28 @@ builder.Services.AddScoped<IVehicleService, VehicleService>();
 builder.Services.AddScoped<IHelperMethods, HelperMethods>();
 builder.Services.AddScoped<IRideRepository, RideRepository>();
 builder.Services.AddScoped<IRideService, RideService>();
+builder.Services.AddScoped<IPassengerRepository,PassengerRepository>();
+builder.Services.AddHttpClient<GeoapifyService>();
+
+builder.Services.AddSignalR();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy.WithOrigins("http://127.0.0.1:5500")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // obavezno za SignalR
+    });
+});
 
 
 var app = builder.Build();
+
+app.UseCors("FrontendPolicy");
+
+app.MapHub<RideHub>("/hubs/ride");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
