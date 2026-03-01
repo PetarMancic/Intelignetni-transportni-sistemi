@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using DeltaDrive.Features.Passengers.Queries;
-using DeltaDrive.Dto;
 using System.Diagnostics;
+using Core.Dto;
 
 namespace DeltaDrive.Controllers
 {

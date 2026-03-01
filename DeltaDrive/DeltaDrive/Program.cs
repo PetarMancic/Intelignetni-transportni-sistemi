@@ -2,10 +2,11 @@ using DeltaDrive.Helpers;
 using DeltaDrive.HubSimulation;
 using DeltaDrive.Repository;
 using DeltaDrive.Repository.Interfaces;
-using DeltaDrive.Services;
-using DeltaDrive.Services.Interfaces;
+using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Services;
+using Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,10 @@ builder.Services.AddDbContext<DeltaDriveDbContext>(options =>
 
 
 builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+{
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(IAssemblyMarker).Assembly); // Application assembly
+});
 
 builder.Services.AddScoped<IPasswordHasher<Passenger>, PasswordHasher<Passenger>>();
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
@@ -34,13 +38,16 @@ builder.Services.AddScoped<IRideService, RideService>();
 builder.Services.AddScoped<IPassengerRepository,PassengerRepository>();
 builder.Services.AddHttpClient<GeoapifyService>();
 
+
 builder.Services.AddSignalR();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendPolicy", policy =>
     {
-        policy.WithOrigins("http://127.0.0.1:5500")
+        policy.WithOrigins("http://127.0.0.1:5500", 
+            "https://id-preview--6c78d5ae-6d44-40ee-b3db-a3de997c4db3.lovable.app",
+            "https://ride-watch-dash.lovable.app")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); // obavezno za SignalR
