@@ -4,6 +4,7 @@ using MediatR;
 using DeltaDrive.Features.Passengers.Queries;
 using System.Diagnostics;
 using Core.Dto;
+using System.ComponentModel;
 
 namespace DeltaDrive.Controllers
 {
@@ -16,13 +17,6 @@ namespace DeltaDrive.Controllers
         public PassengerController(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CreatePassengerCommand command)
-        {
-            var id = await _mediator.Send(command);
-            return Ok(id);
         }
 
         [HttpGet]
@@ -49,12 +43,20 @@ namespace DeltaDrive.Controllers
             return result;
         }
 
-        [HttpPost("BookVehicle")]
-        public async Task<bool> BookVehicle(BookVehicleRequestDto vehicleDto)
+        [HttpPost]
+        public async Task<IActionResult> CreatePassenger(CreatePassengerCommand command)
         {
-
-            var command = new BookVehicleCommand(vehicleDto.VehicleId,vehicleDto.PassengerId, vehicleDto.StartLat, vehicleDto.StartLon, vehicleDto.DestLat, vehicleDto.DestLon);
-            return await _mediator.Send(command);
+            var id = await _mediator.Send(command);
+            return Ok(id);
         }
+
+
+        //[HttpPost("BookVehicle")]
+        //public async Task<bool> BookVehicle([FromBody] BookVehicleRequestDto vehicleDto)
+        //{
+
+        //    var command = new BookVehicleCommand(vehicleDto.VehicleId,vehicleDto.PassengerId, vehicleDto.StartLat, vehicleDto.StartLon, vehicleDto.DestLat, vehicleDto.DestLon);
+        //    return await _mediator.Send(command);
+        //}
     }
 }

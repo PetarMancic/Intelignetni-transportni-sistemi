@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Core.Dto;
+using DeltaDrive.Features.Passengers.Commands;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeltaDrive.Controllers
@@ -18,7 +20,7 @@ namespace DeltaDrive.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateVehicleCommand command)
+        public async Task<IActionResult> CreateVehicle(CreateVehicleCommand command)
         {
             var id = await _mediator.Send(command);
             return Ok(id);

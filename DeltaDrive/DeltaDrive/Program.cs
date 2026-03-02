@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Services;
 using Application;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +18,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DeltaDriveDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddInfrastructure(builder.Configuration);
+
+//builder.Services.AddDbContext<DeltaDriveDbContext>(options =>
+//    options.UseNpgsql(
+//        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 
@@ -29,14 +32,14 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(IAssemblyMarker).Assembly); // Application assembly
 });
 
-builder.Services.AddScoped<IPasswordHasher<Passenger>, PasswordHasher<Passenger>>();
-builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
-builder.Services.AddScoped<IVehicleService, VehicleService>();
-builder.Services.AddScoped<IHelperMethods, HelperMethods>();
-builder.Services.AddScoped<IRideRepository, RideRepository>();
-builder.Services.AddScoped<IRideService, RideService>();
-builder.Services.AddScoped<IPassengerRepository,PassengerRepository>();
-builder.Services.AddHttpClient<GeoapifyService>();
+//builder.Services.AddScoped<IPasswordHasher<Passenger>, PasswordHasher<Passenger>>();
+//builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+//builder.Services.AddScoped<IVehicleService, VehicleService>();
+//builder.Services.AddScoped<IHelperMethods, HelperMethods>();
+//builder.Services.AddScoped<IRideRepository, RideRepository>();
+//builder.Services.AddScoped<IRideService, RideService>();
+//builder.Services.AddScoped<IPassengerRepository,PassengerRepository>();
+//builder.Services.AddHttpClient<GeoapifyService>();
 
 
 builder.Services.AddSignalR();

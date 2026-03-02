@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DeltaDrive.Migrations
 {
     [DbContext(typeof(DeltaDriveDbContext))]
-    partial class DeltaDriveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260301230114_AddingPassengerIdToRatings")]
+    partial class AddingPassengerIdToRatings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,40 +23,6 @@ namespace DeltaDrive.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("DeltaDrive.Domain.Vehicle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Brand")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DriverName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DriverSurname")
-                        .HasColumnType("text");
-
-                    b.Property<double>("StartPrice")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("VehicleStatus")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("distanceToPassenger")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("pricePerKM")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Vehicles");
-                });
 
             modelBuilder.Entity("Passenger", b =>
                 {
@@ -99,6 +68,9 @@ namespace DeltaDrive.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("PassengerId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("RideId")
                         .HasColumnType("integer");
 
@@ -106,6 +78,8 @@ namespace DeltaDrive.Migrations
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PassengerId");
 
                     b.HasIndex("RideId")
                         .IsUnique();
@@ -154,37 +128,55 @@ namespace DeltaDrive.Migrations
                     b.ToTable("Rides");
                 });
 
-            modelBuilder.Entity("DeltaDrive.Domain.Vehicle", b =>
+            modelBuilder.Entity("VehicleItem", b =>
                 {
-                    b.OwnsOne("Location", "Location", b1 =>
-                        {
-                            b1.Property<int>("VehicleId")
-                                .HasColumnType("integer");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
 
-                            b1.Property<double>("Latitude")
-                                .HasColumnType("double precision");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                            b1.Property<double>("Longitude")
-                                .HasColumnType("double precision");
+                    b.Property<string>("Brand")
+                        .HasColumnType("text");
 
-                            b1.HasKey("VehicleId");
+                    b.Property<string>("DriverName")
+                        .HasColumnType("text");
 
-                            b1.ToTable("Vehicles");
+                    b.Property<string>("DriverSurname")
+                        .HasColumnType("text");
 
-                            b1.WithOwner()
-                                .HasForeignKey("VehicleId");
-                        });
+                    b.Property<double>("StartPrice")
+                        .HasColumnType("double precision");
 
-                    b.Navigation("Location");
+                    b.Property<int>("VehicleStatus")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("distanceToPassenger")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("pricePerKM")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("Rating", b =>
                 {
+                    b.HasOne("Passenger", "Passenger")
+                        .WithMany()
+                        .HasForeignKey("PassengerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Ride", "Ride")
                         .WithOne("Rating")
                         .HasForeignKey("Rating", "RideId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Passenger");
 
                     b.Navigation("Ride");
                 });
@@ -197,7 +189,7 @@ namespace DeltaDrive.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DeltaDrive.Domain.Vehicle", "Vehicle")
+                    b.HasOne("VehicleItem", "Vehicle")
                         .WithMany()
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -250,6 +242,30 @@ namespace DeltaDrive.Migrations
                         .IsRequired();
 
                     b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("VehicleItem", b =>
+                {
+                    b.OwnsOne("Location", "Location", b1 =>
+                        {
+                            b1.Property<int>("VehicleItemId")
+                                .HasColumnType("integer");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision");
+
+                            b1.HasKey("VehicleItemId");
+
+                            b1.ToTable("Vehicles");
+
+                            b1.WithOwner()
+                                .HasForeignKey("VehicleItemId");
+                        });
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("Ride", b =>
