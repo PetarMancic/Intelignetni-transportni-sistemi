@@ -1,13 +1,14 @@
-﻿using DeltaDrive.Features.Passengers.Commands;
-using Microsoft.AspNetCore.Mvc;
-using MediatR;
+﻿using Core.Dto;
+using DeltaDrive.Features.Passengers.Commands;
 using DeltaDrive.Features.Passengers.Queries;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Core.Dto;
-using System.ComponentModel;
 
 namespace DeltaDrive.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PassengerController : ControllerBase
@@ -29,7 +30,7 @@ namespace DeltaDrive.Controllers
 
             return Ok(passenger);
         }
-
+        
         [HttpGet("GetTenNearestVehicles")]
         public async Task<TenNearestVehiclesResponseDto> GetTenNearestVehicles([FromQuery] TenNearestVehiclesRequestDto request)
         {          

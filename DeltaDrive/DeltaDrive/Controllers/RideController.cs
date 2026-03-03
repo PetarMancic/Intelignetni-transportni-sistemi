@@ -2,10 +2,12 @@
 using Core.Dto;
 using DeltaDrive.Features.Passengers.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeltaDrive.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class RideController : ControllerBase

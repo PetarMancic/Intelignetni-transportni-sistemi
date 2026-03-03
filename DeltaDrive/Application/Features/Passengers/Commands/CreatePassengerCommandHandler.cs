@@ -14,7 +14,7 @@ namespace DeltaDrive.Features.Passengers.Commands
             IPassengerRepository passengerRepository,
             IPasswordHasher<Passenger> passwordHasher)
         {
-            passengerRepository = _passengerRepository;
+            _passengerRepository = passengerRepository;
             _passwordHasher = passwordHasher;
         }
 
@@ -30,8 +30,7 @@ namespace DeltaDrive.Features.Passengers.Commands
                 DateOfBirth = request.DateOfBirth
             };
 
-            passenger.PasswordHash =
-                _passwordHasher.HashPassword(passenger, request.Password);
+            passenger.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
             await _passengerRepository.AddAsync(passenger);       
 

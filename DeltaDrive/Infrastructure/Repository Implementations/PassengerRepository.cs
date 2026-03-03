@@ -1,13 +1,20 @@
 ﻿using DeltaDrive.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DeltaDrive.Repository
 {
     public class PassengerRepository : BaseRepository<Passenger>, IPassengerRepository
     {
-        public PassengerRepository(DeltaDriveDbContext _context) :base(_context)
+        private readonly DeltaDriveDbContext _context;
+        public PassengerRepository(DeltaDriveDbContext context) :base(context)
         {
-            
+            _context = context;
         }
 
+        public async Task<Passenger> GetByEmailAsync(string email)
+        {
+            return await _context.Passengers.FirstOrDefaultAsync(p => p.Email == email);
+
+        }
     }
 }
