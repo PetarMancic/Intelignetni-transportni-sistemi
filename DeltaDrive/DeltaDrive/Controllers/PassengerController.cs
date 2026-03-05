@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace DeltaDrive.Controllers
 {
-    [Authorize]
+  
     [ApiController]
     [Route("api/[controller]")]
     public class PassengerController : ControllerBase
