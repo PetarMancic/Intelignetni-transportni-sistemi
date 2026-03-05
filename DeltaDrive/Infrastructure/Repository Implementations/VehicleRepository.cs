@@ -63,7 +63,9 @@ namespace DeltaDrive.Repository
                     driverSurname: v.DriverSurname!,
                     distanceToPassenger: Math.Round(v.distanceToPassenger,2),
                     startPrice: Math.Round(v.StartPrice,2),
-                    totalPrice: Math.Round(totalPrice, 2)
+                    totalPrice: Math.Round(totalPrice, 2),
+                    latitude: v.Location.Latitude,
+                    longitude: v.Location.Longitude
                 );
             }).ToList();
 

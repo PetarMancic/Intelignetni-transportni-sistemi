@@ -2,6 +2,7 @@
 using DeltaDrive.Features.Passengers.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace DeltaDrive.Controllers
 {
@@ -16,6 +17,19 @@ namespace DeltaDrive.Controllers
         public VehicleController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet("GetTenNearestVehicles")]
+        public async Task<TenNearestVehiclesResponseDto> GetTenNearestVehicles([FromQuery] TenNearestVehiclesRequestDto request)
+        {
+            var stopwatch = Stopwatch.StartNew();
+            var result = await _mediator.Send(
+                    new GetTenNearestVehiclesQuery(request)); //ovde treba request 
+
+            stopwatch.Stop();
+            var elapsedMs = stopwatch.ElapsedMilliseconds;
+
+            return result;
         }
 
 

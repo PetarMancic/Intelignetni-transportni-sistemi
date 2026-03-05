@@ -43,8 +43,8 @@ namespace DeltaDrive.Controllers
            
             return result;
         }
-
-        [HttpPost]
+        [AllowAnonymous]
+        [HttpPost("CreatePassenger")]
         public async Task<IActionResult> CreatePassenger(CreatePassengerCommand command)
         {
             var id = await _mediator.Send(command);

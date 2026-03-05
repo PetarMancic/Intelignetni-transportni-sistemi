@@ -7,6 +7,8 @@
         string driverSurname, 
         double distanceToPassenger, 
         double startPrice,
-        double totalPrice
+        double totalPrice,
+        double latitude,
+        double longitude
         );    
 }

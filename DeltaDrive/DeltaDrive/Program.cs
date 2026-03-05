@@ -1,4 +1,4 @@
-using Application;
+﻿using Application;
 using Application.Settings;
 using DeltaDrive.HubSimulation;
 using Infrastructure;
@@ -65,13 +65,22 @@ builder.Services.AddMediatR(cfg =>
 //builder.Services.AddHttpClient<GeoapifyService>();
 
 
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(options =>
+{
+    options.KeepAliveInterval = TimeSpan.FromSeconds(10);  // ping svake 10s
+    options.ClientTimeoutInterval = TimeSpan.FromSeconds(30); // čekaj 30s pre disconnect
+});
+
+//builder.Services.AddSignalR();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendPolicy", policy =>
     {
-        policy.WithOrigins("http://127.0.0.1:5500", 
+        policy.WithOrigins("http://127.0.0.1:5500",
+            "http://localhost:8080",      // ✅ dodaj ovo
+            "https://localhost:8080",
+            "http://localhost:5173",
             "https://id-preview--6c78d5ae-6d44-40ee-b3db-a3de997c4db3.lovable.app",
             "https://ride-watch-dash.lovable.app")
               .AllowAnyHeader()

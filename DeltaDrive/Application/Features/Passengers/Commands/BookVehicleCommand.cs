@@ -9,5 +9,5 @@ namespace DeltaDrive.Features.Passengers.Commands
     double StartLon,
     double DestLat,
     double DestLon
-) : IRequest<bool>; // vraca RideId
+) : IRequest<int>; // vraca RideId
 }

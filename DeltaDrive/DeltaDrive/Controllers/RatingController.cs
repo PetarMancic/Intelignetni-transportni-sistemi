@@ -1,4 +1,5 @@
 ﻿using Application.Features.Rating.Commands;
+using Application.Features.Rating.Query;
 using Core.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,13 @@ namespace DeltaDrive.Controllers
             var result = await mediator.Send(command);
 
             return Ok(result);
+        }
+
+        [HttpGet("GetVehicleRatings/{vehicleId}")]
+        public async Task<IActionResult> GetVehicleRatings(int vehicleId)
+        {
+            var ratings = await mediator.Send(new GetVehicleRatingsQuery(vehicleId));
+            return Ok(ratings);
         }
     }
 }

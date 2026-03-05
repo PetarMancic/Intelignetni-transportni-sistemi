@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Rating\Query\" />
     <Folder Include="Features\Rides\Commands\" />
   </ItemGroup>
 

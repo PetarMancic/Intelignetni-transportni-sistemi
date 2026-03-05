@@ -25,11 +25,24 @@ namespace DeltaDrive.Controllers
             return rides;
         }
 
+        [HttpGet("GetTenNearestVehicles")]
+        public async Task<TenNearestVehiclesResponseDto> GetTenNearestVehicles([FromQuery] TenNearestVehiclesRequestDto request)
+        {
+           
+            var result = await _mediator.Send(
+                    new GetTenNearestVehiclesQuery(request)); //ovde treba request 
+
+            return result;
+        }
+
+
+
         [HttpPost("BookRide")]
-        public async Task<bool> BookRide([FromBody] BookVehicleRequestDto vehicleDto)
+        public async Task<IActionResult> BookRide([FromBody] BookVehicleRequestDto vehicleDto)
         {
             var command = new BookVehicleCommand(vehicleDto.VehicleId, vehicleDto.PassengerId, vehicleDto.StartLat, vehicleDto.StartLon, vehicleDto.DestLat, vehicleDto.DestLon);
-            return await _mediator.Send(command);
+            var rideId=  await _mediator.Send(command);
+            return Ok(new{rideId});
         }
     }
 }

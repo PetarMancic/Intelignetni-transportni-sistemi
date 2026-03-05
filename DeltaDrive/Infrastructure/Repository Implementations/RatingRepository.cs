@@ -26,5 +26,14 @@ namespace Infrastructure.Repository_Implementations
             var rating=  await _context.Ratings.Where(r=> r.RideId== rideId && r.PassengerId == passengerId).FirstOrDefaultAsync(cancellationToken);
             return rating;
         }
+
+        public async Task<List<RideRating>> GetRatingsByVehicleIdAsync(int vehicleId, CancellationToken cancellationToken)
+        {
+            return await _context.Ratings
+                .Include(r => r.Ride)
+                .Include(r => r.Passenger)
+                .Where(r => r.Ride.Vehicle.Id == vehicleId)
+                .ToListAsync(cancellationToken);
+        }
     }
 }

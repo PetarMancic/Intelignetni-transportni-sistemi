@@ -26,7 +26,7 @@ namespace DeltaDrive.Controllers
             if (user is null)
                 return Unauthorized("Pogrešan email ili lozinka.");
 
-            return Ok(new { user.Token });
+            return Ok(new { user });
         }
     }
 }
