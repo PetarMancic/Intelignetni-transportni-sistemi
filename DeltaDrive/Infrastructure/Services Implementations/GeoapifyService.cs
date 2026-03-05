@@ -15,6 +15,8 @@ namespace Infrastructure.Services
             _apiKey = configuration["Geoapify:ApiKey"]
                ?? throw new Exception("Geoapify API key nije konfigurisan.");
             _httpClient = httpClient;
+
+            Console.WriteLine($"Geoapify API Key: '{_apiKey}'");
         }
 
         public async Task<List<Location>> GetRouteCoordinates(Location start, Location destination)
