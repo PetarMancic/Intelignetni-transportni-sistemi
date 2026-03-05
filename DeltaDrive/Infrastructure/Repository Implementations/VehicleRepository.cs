@@ -16,37 +16,57 @@ namespace DeltaDrive.Repository
 
         public async Task<TenNearestVehiclesResponseDto> GetAvailableVehicles(TenNearestVehiclesRequestDto request)
         {
-            var nearestVehicles = await _context.Vehicles
-                .FromSqlInterpolated($@"
-                    SELECT
-                            ""Id"",
-                    ""Brand"",
-                    ""Location_Longitude"",
-                    ""Location_Latitude"",
-                    ""DriverName"",
-                    ""DriverSurname"",
-                    ""StartPrice"",
-                    ""VehicleStatus"",
-                    ""pricePerKM"",
-                           ST_Distance(
-                               geography(ST_SetSRID(ST_MakePoint(""Location_Longitude"", ""Location_Latitude""), 4326)),
-                               geography(ST_SetSRID(ST_MakePoint({request.PickUpLocation.Longitude}, {request.PickUpLocation.Latitude}), 4326))
-                           ) AS ""distanceToPassenger""
-                    FROM ""Vehicles""
-                    WHERE ""VehicleStatus"" = 0
-                    ORDER BY ""distanceToPassenger""
-                    LIMIT 10
-                ")
-                .ToListAsync();
+            //ovo je sa postgisom, vrati ga ako ne radi 
+            //var nearestVehicles = await _context.Vehicles
+            //    .FromSqlInterpolated($@"
+            //        SELECT
+            //                ""Id"",
+            //        ""Brand"",
+            //        ""Location_Longitude"",
+            //        ""Location_Latitude"",
+            //        ""DriverName"",
+            //        ""DriverSurname"",
+            //        ""StartPrice"",
+            //        ""VehicleStatus"",
+            //        ""pricePerKM"",
+            //               ST_Distance(
+            //                   geography(ST_SetSRID(ST_MakePoint(""Location_Longitude"", ""Location_Latitude""), 4326)),
+            //                   geography(ST_SetSRID(ST_MakePoint({request.PickUpLocation.Longitude}, {request.PickUpLocation.Latitude}), 4326))
+            //               ) AS ""distanceToPassenger""
+            //        FROM ""Vehicles""
+            //        WHERE ""VehicleStatus"" = 0
+            //        ORDER BY ""distanceToPassenger""
+            //        LIMIT 10
+            //    ")
+            //    .ToListAsync();
 
-                //            var rideDistanceMeters = await _context.Database
-                //.SqlQuery<double>($@"
-                //        SELECT ST_Distance(
-                //            geography(ST_SetSRID(ST_MakePoint({request.PickUpLocation.Longitude}, {request.PickUpLocation.Latitude}), 4326)),
-                //            geography(ST_SetSRID(ST_MakePoint({request.DestinationLocation.Longitude}, {request.DestinationLocation.Latitude}), 4326))
-                //        ) AS ""Value""
-                //    ")
-                //.SingleAsync();
+
+            //ovo je samo zbog railway
+            var nearestVehicles = await _context.Vehicles
+    .FromSqlInterpolated($@"
+        SELECT
+            ""Id"",
+            ""Brand"",
+            ""Location_Longitude"",
+            ""Location_Latitude"",
+            ""DriverName"",
+            ""DriverSurname"",
+            ""StartPrice"",
+            ""VehicleStatus"",
+            ""pricePerKM"",
+            6371000 * 2 * ASIN(SQRT(
+                POWER(SIN(RADIANS(""Location_Latitude"" - {request.PickUpLocation.Latitude}) / 2), 2) +
+                COS(RADIANS({request.PickUpLocation.Latitude})) * COS(RADIANS(""Location_Latitude"")) *
+                POWER(SIN(RADIANS(""Location_Longitude"" - {request.PickUpLocation.Longitude}) / 2), 2)
+            )) AS ""distanceToPassenger""
+        FROM ""Vehicles""
+        WHERE ""VehicleStatus"" = 0
+        ORDER BY ""distanceToPassenger""
+        LIMIT 10
+    ")
+    .ToListAsync();
+
+
 
             var rideDistanceKm = CalculateDistanceFromPickUpToDestionationLocation(request.PickUpLocation, request.DestinationLocation);
 
