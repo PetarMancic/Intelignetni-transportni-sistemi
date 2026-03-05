@@ -3,6 +3,7 @@ using Application.Settings;
 using DeltaDrive.HubSimulation;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -71,6 +72,8 @@ builder.Services.AddSignalR(options =>
     options.ClientTimeoutInterval = TimeSpan.FromSeconds(30); // čekaj 30s pre disconnect
 });
 
+
+
 //builder.Services.AddSignalR();
 
 builder.Services.AddCors(options =>
@@ -92,6 +95,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+// railway
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<DeltaDriveDbContext>();
+    db.Database.Migrate();
+}
 
 app.UseCors("FrontendPolicy");
 
