@@ -43,3 +43,8 @@ local.settings.json
 # Resharper
 _ReSharper*/
 *.DotSettings.user
+
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+*.secrets.json
