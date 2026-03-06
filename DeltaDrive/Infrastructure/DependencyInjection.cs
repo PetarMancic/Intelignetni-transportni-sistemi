@@ -38,6 +38,7 @@ namespace Infrastructure
             services.AddScoped<IHelperMethods, HelperMethods>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddHttpClient<GeoapifyService>();
+            services.AddScoped<IEmailService, EmailService>();
 
             // Identity
             services.AddScoped<IPasswordHasher<Passenger>, PasswordHasher<Passenger>>();

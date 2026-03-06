@@ -8,6 +8,12 @@ public class Passenger
     public string LastName { get; set; }
     public DateTime DateOfBirth { get; set; }
 
+
+    // Email verifikacija
+    public bool IsEmailVerified { get; set; } = false;
+    public string? EmailVerificationToken { get; set; }
+    public DateTime? EmailVerificationTokenExpiry { get; set; }
+
     //Todo : Add navigation properties for related entities(e.g., Ride, Reviews)
 }
 

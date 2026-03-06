@@ -16,5 +16,10 @@ namespace DeltaDrive.Repository
             return await _context.Passengers.FirstOrDefaultAsync(p => p.Email == email);
 
         }
+
+        public async Task<Passenger> GetByVerificationTokenAsync(string token)
+        {
+            return await _context.Passengers.FirstOrDefaultAsync(p => p.EmailVerificationToken == token);
+        }
     }
 }

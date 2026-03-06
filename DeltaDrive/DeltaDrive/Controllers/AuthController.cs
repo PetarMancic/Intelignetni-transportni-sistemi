@@ -1,4 +1,5 @@
-﻿using Application.Features.Passengers.Queries;
+﻿using Application.Features.Passengers.Commands;
+using Application.Features.Passengers.Queries;
 using Core.Dto;
 using Infrastructure.Services_Implementations;
 using MediatR;
@@ -28,5 +29,17 @@ namespace DeltaDrive.Controllers
 
             return Ok(new { user });
         }
+
+        // Controller
+        [HttpGet("verify-email")]
+        public async Task<IActionResult> VerifyEmail([FromQuery] string token)
+        {
+            await _mediator.Send(new VerifyEmailCommand(token));
+
+            return Redirect("https://intelignetni-transportni-sistemi-production.up.railway.app/api/Auth/login");
+            //return Redirect("http://localhost:8080/login");
+
+        }
+
     }
 }

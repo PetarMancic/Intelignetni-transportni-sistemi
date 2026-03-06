@@ -22,13 +22,16 @@ namespace Application.Features.Passengers.Queries
         {
             // 1. Pronađi putnika po emailu
             var passenger = await _passengerRepository.GetByEmailAsync(request.request.Email);
+
             if (passenger is null)
                 throw new NotFoundException("Pogrešan email ili lozinka.");
 
-            // 2. Verifikuj lozinku
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(request.request.Password, passenger.PasswordHash);
             if (!isPasswordValid)
                 throw new UnauthorizedAccessException("Pogrešan email ili lozinka.");
+
+            if (!passenger.IsEmailVerified)
+                throw new UnauthorizedAccessException("Email is not verified!");
 
             // 3. Generiši token
             var token = _tokenService.GenerateToken(passenger.Id, passenger.Email);

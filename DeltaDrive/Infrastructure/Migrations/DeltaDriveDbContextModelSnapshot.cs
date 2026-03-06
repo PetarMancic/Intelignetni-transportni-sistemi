@@ -36,9 +36,18 @@ namespace DeltaDrive.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("EmailVerificationToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("EmailVerificationTokenExpiry")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -51,37 +60,6 @@ namespace DeltaDrive.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Passengers");
-                });
-
-            modelBuilder.Entity("Rating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("PassengerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RideId")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PassengerId");
-
-                    b.HasIndex("RideId")
-                        .IsUnique();
-
-                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Ride", b =>
@@ -125,6 +103,36 @@ namespace DeltaDrive.Migrations
                     b.ToTable("Rides");
                 });
 
+            modelBuilder.Entity("RideRating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PassengerId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RideId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PassengerId");
+
+                    b.HasIndex("RideId")
+                        .IsUnique();
+
+                    b.ToTable("Ratings");
+                });
+
             modelBuilder.Entity("VehicleItem", b =>
                 {
                     b.Property<int>("Id")
@@ -157,25 +165,6 @@ namespace DeltaDrive.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vehicles");
-                });
-
-            modelBuilder.Entity("Rating", b =>
-                {
-                    b.HasOne("Passenger", "Passenger")
-                        .WithMany()
-                        .HasForeignKey("PassengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ride", "Ride")
-                        .WithOne("Rating")
-                        .HasForeignKey("Rating", "RideId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Passenger");
-
-                    b.Navigation("Ride");
                 });
 
             modelBuilder.Entity("Ride", b =>
@@ -239,6 +228,25 @@ namespace DeltaDrive.Migrations
                         .IsRequired();
 
                     b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("RideRating", b =>
+                {
+                    b.HasOne("Passenger", "Passenger")
+                        .WithMany()
+                        .HasForeignKey("PassengerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ride", "Ride")
+                        .WithOne("Rating")
+                        .HasForeignKey("RideRating", "RideId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Passenger");
+
+                    b.Navigation("Ride");
                 });
 
             modelBuilder.Entity("VehicleItem", b =>
