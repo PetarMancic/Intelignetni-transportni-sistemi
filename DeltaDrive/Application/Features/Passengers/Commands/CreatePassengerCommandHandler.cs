@@ -27,8 +27,8 @@ namespace DeltaDrive.Features.Passengers.Commands
             CancellationToken cancellationToken)
         {
 
-            var isPassengerExists = _passengerRepository.GetByEmailAsync(request.Email);
-            if(isPassengerExists is not  null)
+            var isPassengerExists = await _passengerRepository.GetByEmailAsync(request.Email);
+            if (isPassengerExists is not null)
             {
                 throw new InvalidOperationException("Korisnik sa ovim emailom već postoji.");
             }
